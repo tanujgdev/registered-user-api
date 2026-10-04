@@ -215,21 +215,50 @@ exports.updateUser = async (req, res) => {
 };
 
 // DELETE USER
+// exports.deleteUser = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+
+//         await pool.query(
+//             "CALL delete_registered_user($1)",
+//             [id]
+//         );
+
+//         res.status(200).json({
+//             success: true,
+//             message: "User deleted successfully"
+//         });
+//     } catch (error) {
+//         console.error(error);
+
+//         res.status(500).json({
+//             success: false,
+//             message: "Failed to delete user",
+//             error: error.message
+//         });
+//     }
+// };
+
 exports.deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await pool.query(
-            "CALL delete_registered_user($1)",
+        console.log("DELETE REQUEST ID:", id);
+
+        const result = await pool.query(
+            "CALL public.delete_registered_user($1::INTEGER)",
             [id]
         );
+
+        console.log("DELETE RESULT:", result);
 
         res.status(200).json({
             success: true,
             message: "User deleted successfully"
         });
+
     } catch (error) {
-        console.error(error);
+        console.error("DELETE ERROR:", error);
 
         res.status(500).json({
             success: false,
@@ -238,6 +267,12 @@ exports.deleteUser = async (req, res) => {
         });
     }
 };
+
+
+
+
+
+
 
 // LOGIN
 exports.login = async (req, res) => {
