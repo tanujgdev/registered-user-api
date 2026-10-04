@@ -245,10 +245,13 @@ exports.deleteUser = async (req, res) => {
 
         console.log("DELETE REQUEST ID:", id);
 
-        const result = await pool.query(
-            "CALL public.delete_registered_user($1::INTEGER)",
-            [id]
-        );
+        const result = 
+await pool.query(
+    "CALL public.delete_registered_user($1::INTEGER)",
+    [id]
+);
+
+      
 
         console.log("DELETE RESULT:", result);
 
